@@ -1,2 +1,2 @@
-# INF553
-The homework of INF553
+# Spring 2018 INF553 - HW1
+The homework1 of INF553
