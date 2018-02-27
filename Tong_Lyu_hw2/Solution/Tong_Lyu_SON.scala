@@ -2,7 +2,6 @@ import java.io.PrintWriter
 import java.io.File
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
-import scala.collection.immutable
 import scala.collection.mutable.{ListBuffer, Map, Set}
 import scala.util.control.Breaks.{break, breakable}
 
@@ -15,7 +14,7 @@ object son {
     val sc = new SparkContext(spark)
 
     val caseNumber = args(0).toInt
-    val file = sc.textFile(System.getProperty("user.dir")+args(1))
+    val file = sc.textFile(System.getProperty("user.dir")+args(1),1)
     val header = file.first()
     val input = file.filter(_ != header)
     val partition = input.partitions.length
@@ -37,14 +36,13 @@ object son {
     }
 
     //Phase1: use apriori to select all candidate itemsets
-    val phase1 = baskets.mapPartitions(lists => apriori(lists, minSupport/partition))
-      .reduceByKey((a,b) => List.concat(a,b).distinct).flatMap(_._2.map(set => (set,1)))
-    val candidate = phase1.map(_._1.toSet).collect()
+    val phase1 = baskets.mapPartitions(lists => apriori(lists, minSupport/partition)).distinct()
+    val candidate = phase1.collect()
 
     //Phase2: count the real occurrence for each candidate itemset
     val phase2 = baskets.flatMap(lists => {
       val bSet = lists.toSet
-      var counts = Map.empty[immutable.Set[String], Int]
+      var counts = Map.empty[Set[String], Int]
       for (set <- candidate) {
         if (set.subsetOf(bSet)) {
           if (counts.contains(set)) {
@@ -58,6 +56,7 @@ object son {
     })
 
     val freqItemsets = phase2.reduceByKey(_+_).filter(_._2 >= minSupport)
+    val totalCount = freqItemsets.count()
     val result = freqItemsets.keys.map(_.toList).groupBy(_.size).sortByKey().collect()
 
     //Override the ordering to maintain lexicographical order of itemsets
@@ -81,7 +80,7 @@ object son {
     //Self-ordering
     for (kTuple <- result) {
       val list = kTuple._2.toList
-      var selfSortList = ListBuffer.empty[List[String]]
+      var selfSortList = new ListBuffer[List[String]]
       for (row <- list) {
         val set = row.sorted
         selfSortList += set
@@ -99,21 +98,20 @@ object son {
       }
       out.write("\n\n")
     }
-
+    out.close()
 
     val endTime = System.nanoTime()
     val time = (endTime - startTime) / 1000000000
 
-    println("The execution time is:" + time.toString +"s")
-    out.close()
+    println("There are total "+ totalCount.toString + " frequent itemsets. \nThe execution time is: " + time.toString +"s")
+
   }
 
 
-  def apriori(iter: Iterator[List[String]], minSupport: Int): Iterator[(Int, List[Set[String]])] = {
+  def apriori(iter: Iterator[List[String]], minSupport: Int): Iterator[Set[String]] = {
     var items = Map.empty[String, Int]
-    var baskets = ListBuffer.empty[List[String]]
-    var freqSets = ListBuffer.empty[Set[String]]
-    var results = Map.empty[Int, List[Set[String]]]
+    var baskets = new ListBuffer[List[String]]
+    var freqItemsets = new ListBuffer[Set[String]]
 
     //Construct the list of baskets and single items
     while (iter.hasNext) {
@@ -131,25 +129,24 @@ object son {
     var freqItems= Set.empty[String]
     items.foreach(t => {
       if (t._2  >= minSupport) {
-        freqSets += Set(t._1)
+        freqItemsets += Set(t._1)
         freqItems += t._1
       }
     })
 
-    results += (1 -> freqSets.toList)
-    var canKset = freqSets.toList
+    var canKset = freqItemsets.toList
     var k = 2
     while (canKset.nonEmpty) {
       canKset = getCandidate(canKset, k, freqItems)
       val freqKset = getFrequent(canKset, baskets.toList, minSupport)
       if (freqKset.nonEmpty) {
-        results += (k -> freqKset)
+        freqItemsets ++= freqKset
       }
       canKset = freqKset
       k = k + 1
     }//while there is no candidate with k size, the loop is over
 
-    results.toIterator
+    freqItemsets.toIterator
   }
 
   def getCandidate(canK1set: List[Set[String]], k: Int, freqItems: Set[String]): List[Set[String]] = {
@@ -191,7 +188,7 @@ object son {
       }
     })
 
-    var freqKset = ListBuffer.empty[Set[String]]
+    var freqKset = new ListBuffer[Set[String]]
     countKset.foreach(set => if (set._2 >= minSupport) freqKset += set._1)
     freqKset.toList
   }
