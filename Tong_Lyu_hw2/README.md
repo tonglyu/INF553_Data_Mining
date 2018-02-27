@@ -85,9 +85,9 @@ Tips:
 
 3)	The program will automatically generate an output file for each execution under the same current folder. When the program runs successfully, the console will show: 
 
-"There are total 'number' frequent itemsets."
+	"There are total 'number' frequent itemsets."
 
-"The execution time is: 'time' s".
+	"The execution time is: 'time' s".
 
 ## 5. Execution result
 |File Name|Case Number|Support|Runtime(sec)
