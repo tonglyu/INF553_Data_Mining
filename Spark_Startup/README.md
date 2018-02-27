@@ -23,13 +23,3 @@ For example,
 * Task2 
 
  ` .bin/spark-submit --class task2 absolute_path/to/Tong_Lyu_task2.jar absolute_path/to/reviews_Toys_and_Games.json absolute_path/to/metadata.json absolute_path/to/Tong_Lyu_task2.csv`
-
-## Tests
-These are the results running on the author's laptop:
-* Task1
-
-<img src = "https://github.com/tonglyu/INF553/blob/master/task1.png" height="30%" width=30%>
-
-* Task2
-
-<img src = "https://github.com/tonglyu/INF553/blob/master/task2.png" height=30% width=30%>
