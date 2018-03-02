@@ -39,7 +39,7 @@ In each chunk, we applied Apriori algorithm to get all k-size frequent itemsets.
 C(k) = candidate k-tuples, 
 L(k) = the set of truly frequent k-tuples.
 
-First, we generate the single items from the baskets and count the occurrence to get C(1), and filter to get L(1).
+First, we generate the single items from the baskets and count the occurrence to get C(1), and filter it to get L(1).
 1)	Get candidate itemsets: When k > 2, we use the L(k-1) to generate C(k). 
 
   	a)	Each time we choose one itemsets in the L(k-1) and add another single item occurred in L(k-1), then generate a new itemsets with k size.
