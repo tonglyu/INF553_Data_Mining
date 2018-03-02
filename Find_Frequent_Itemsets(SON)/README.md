@@ -36,14 +36,15 @@ Reduce task: Filter the candidate itemsets whose occurrence is less than min sup
     
 ### * Apriori algorithm
 In each chunk, we applied Apriori algorithm to get all k-size frequent itemsets. For each itemsets with k size, we construct two sets of k-tuples (sets of size k):
-C(k) = candidate k-tuples
-L(k) = the set of truly frequent k-tuples
+C(k) = candidate k-tuples, 
+L(k) = the set of truly frequent k-tuples.
+
 First, we generate the single items from the baskets and count the occurrence to get C(1), and filter to get L(1).
 1)	Get candidate itemsets: When k > 2, we use the L(k-1) to generate C(k). 
 
-  a)	Each time we choose one itemsets in the L(k-1) and add another single item occurred in L(k-1), then generate a new itemsets with k size.
+  	a)	Each time we choose one itemsets in the L(k-1) and add another single item occurred in L(k-1), then generate a new itemsets with k size.
 
-  b)	For each new itemset, check if all its subsets of k-1 size are in L(k-1), if so, add it into C(k).
+  	b)	For each new itemset, check if all its subsets of k-1 size are in L(k-1), if so, add it into C(k).
 
 2)	Get frequent itemsets: 
 ```
