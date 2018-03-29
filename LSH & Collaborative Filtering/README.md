@@ -8,7 +8,8 @@ This assignment aims to implement two algorithms with Spark. The first is Locali
 * Total datasets: /video_small_num.csv
 * Testing datasets: /video_small_testing_num.csv
 * Ground-truth datasets of LSH:
-  /video_small_ground_truth_cosine.csv 
+  /video_small_ground_truth_cosine.csv
+  
   /video_small_ground_truth_jaccard.csv
 ## 3. Implementation of algorithm
 
@@ -43,6 +44,7 @@ Tips:
 * Recall: 0.7131235730968064
 * Time: 572s
 ### 3. Model-based CF
+| :------: | :------: | :------: | :------:|
 |>= 0 and < 1|3957
 |>= 1 and < 2|2927
 |>= 2 and < 3|646
@@ -51,6 +53,7 @@ Tips:
 |RMSE|1.2784529343163713
 |Time|72s
 ### 4. User-based CF
+| :------: | :------: | :------: | :------:|
 |>= 0 and < 1|2238
 |>= 1 and < 2|1318
 |>= 2 and < 3|466
