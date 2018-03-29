@@ -16,17 +16,21 @@ This assignment aims to implement two algorithms with Spark. The first is Locali
 #### 1) Minhash signatures
 The aim of minhashing is to reduce the large sets of features (e.g. user sets of each products) into small signatures.
 The original characteristic matrix (S) of sets is as follows:
+
 |Element|product1|product2|product3|product4
 | :------: | :------: | :------: | :------: | :------: |
 |user1|1|0|0|1
 |user2|0|0|1|0
 |user3|1|0|1|1
 |user4|0|0|1|0
+
 Pick a permutation of rows, (i.e. f(userId) = (a * userId + b) % m, m is the number of users), Minhash(Sj) = no. of 1st row i where S[i, j] = 1, then we can get the signature matrix of each product:
+
 |Element|product1|product2|product3|product4
 | :------: | :------: | :------: | :------: | :------: |
 |minHash1|1|3|0|1
 |minHash2|1|2|0|0
+
 #### 2) Locality-Sensitive Hashing
 Now we have reduced large user sets into small signatures, but we still have a large number of product pairs to compare. As a result, LSH hashes the signatures instead to reduce the pairs we need to compare. And we just estimate similarity for sets in the same bucket.
 To make it easier, according to the fact that the sample rows of similar signatures should also be similar, we divide signatures into “bands”, each band has same rows. Hash each band individually, if each signature of one pair are hashed into the same bucket (it happends only if they are identical) in at least one band, the pair will be considered as a candidate pair.
@@ -34,7 +38,7 @@ To make it easier, according to the fact that the sample rows of similar signatu
 Now we have candidate product pairs, and we can calculate the similarity of each pair from the original characteristic matrix.
 * Jaccard similarity = size of intersection / size of union
 * Cosine similarity = 
-cos(\theta ) = \frac{A\cdot B}{\left \| A \right \|\left \| B \right \|} = \frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times \sqrt{\sum_{i=1}^{n}({B}_i)^2}}
+<a href="https://www.codecogs.com/eqnedit.php?latex=cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" title="cos(\theta ) = \frac{A\cdot B}{\left \| A \right \|\left \| B \right \|} = \frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times \sqrt{\sum_{i=1}^{n}({B}_i)^2}}" /></a>
 
 ## 4. Usage Example
 Open your terminal, using following command line in the top-level Spark directory to launch the applications. 
