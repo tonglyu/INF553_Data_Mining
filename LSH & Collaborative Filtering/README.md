@@ -44,6 +44,7 @@ Tips:
 * Recall: 0.7131235730968064
 * Time: 572s
 ### 3. Model-based CF
+|Range of errors|Count
 | :------: | :------: |
 |>= 0 and < 1|3957
 |>= 1 and < 2|2927
@@ -54,6 +55,7 @@ Tips:
 |Time|72s
 
 ### 4. User-based CF
+|Range of errors|Count
 | :------: | :------: |
 |>= 0 and < 1|2238
 |>= 1 and < 2|1318
