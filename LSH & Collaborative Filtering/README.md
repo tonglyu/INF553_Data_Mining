@@ -60,6 +60,7 @@ Confusion Matrix
 |Negative(actual)|False positive (FP)|True Negative(TN)
 
 Precison = TP / (TP + FP)
+
 Recall = TP / (TP + FN)
 
 ### Collaborative Filtering
@@ -67,6 +68,7 @@ The /video_small_testing_num.csv datasets are a subset of the video_small_num.cs
 
 #### 1) Model-based CF
 The code joins Spark MLlib and use ALS model to implement the model-based CF.
+
 More about Spark MLlib from: http://spark.apache.org/docs/latest/mllib-collaborative-filtering.html
 #### 2) User-based CF
 A subset of other users is chosen based on their similarity to the active user. A weighted combination of their ratings is used to make predictions for the active user.
@@ -82,37 +84,37 @@ Steps:
 In this program, we don't take the top-k users, and just use all other users' ratings instead.
 
 * Pearson correlation 
-For users (u, v), Pearson correlation is
+  For users (u, v), Pearson correlation is
 
 <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" title="w_{u,v} = \frac{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})(r_{v,i} - \bar{r}_{v})}{\sqrt{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})^2}\sqrt{\sum_{i \in I} (r_{v,i} - \bar{r}_{v})^2}}" /></a></div>
 
-where I summations are over the items that both user u and v have rated, and <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> is the average rating of the co-rated items of the uth user.
+  where I summations are over the items that both user u and v have rated, and <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> is the average rating of the co-rated items of the uth user.
 
-Note: When calculating these similarities, look only at the co-rated items of user (u, v).
+  Note: When calculating these similarities, look only at the co-rated items of user (u, v).
 
 * Predictions
-Weighted average of their ratings is used to generate predictions. 
+  Weighted average of their ratings is used to generate predictions. 
 
-To make a prediction for an active user a on an item i:
+  To make a prediction for an active user a on an item i:
 
 <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" title="P_{a,i} = \bar{r}_a + \frac{\sum_{u \in U}(r_{u,i} - \bar{r}_u)\cdot w_{a,u}}{\sum_{u \in U}\left | w_{a,u} \right |}" /></a></div>
 
-where <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{a}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{a}" title="\bar{r}_{a}" /></a> and  <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> are the average ratings of user a and u on all other rated items, and is the weight between the user a and user u. The summations are over all the users who have rated the item i.
+  where <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{a}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{a}" title="\bar{r}_{a}" /></a> and  <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> are the average ratings of user a and u on all other rated items, and is the weight between the user a and user u. The summations are over all the users who have rated the item i.
 
-Note: When making predictions, calculate average of all rated items except item i for users a and u. 
+  Note: When making predictions, calculate average of all rated items except item i for users a and u. 
 
 #### 3) Evaluation 
 After achieving the prediction for ratings, we compare the result to the correspond ground truth and compute the absolute differences. The absolute differences are divided into 5 levels, and the numbers of the prediction for each level are counted as following:
 
->=0 and <1: 12345 //there are 12345 predictions with a < 1 difference from the ground truth
+\>=0 and <1: 12345 //there are 12345 predictions with a < 1 difference from the ground truth
 
->=1 and <2: 123
+\>=1 and <2: 123
 
->=2 and <3: 1234
+\>=2 and <3: 1234
 
->=3 and <4: 1234
+\>=3 and <4: 1234
 
->=4: 12
+\>=4: 12
 
 Additionally, RMSE (Root Mean Squared Error) is computed to evaluate the model.
 
@@ -155,7 +157,7 @@ Tips:
 * Recall: 0.7131235730968064
 * Time: 572s
 ### 3. Model-based CF
-<div align=center>
+
 |Range of errors|Count
 | :------: | :------: |
 |>= 0 and < 1|3957
@@ -165,10 +167,10 @@ Tips:
 |>= 4|3
 |RMSE|1.2784529343163713
 |Time|72s
- </div>
+
   
 ### 4. User-based CF
-<div align=center> 
+
 |Range of errors|Count
 | :------: | :------: |
 |>= 0 and < 1|2247
@@ -178,4 +180,4 @@ Tips:
 |>= 4|19
 |RMSE|1.3996232727594942
 |Time|45s
-</div>
+
