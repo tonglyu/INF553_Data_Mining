@@ -10,6 +10,7 @@ The second one is Collaborative Filtering with model-based and user-based algori
 * Total datasets: /video_small_num.csv
 * Testing datasets: /video_small_testing_num.csv
 * Ground-truth datasets of LSH:
+  
   /video_small_ground_truth_cosine.csv
   
   /video_small_ground_truth_jaccard.csv
@@ -44,7 +45,7 @@ Now we have candidate product pairs, and we can calculate the similarity of each
 * Jaccard similarity = size of intersection / size of union
 * Cosine similarity = 
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" title="cos(\theta ) = \frac{A\cdot B}{\left \| A \right \|\left \| B \right \|} = \frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times \sqrt{\sum_{i=1}^{n}({B}_i)^2}}" /></a>
+<a align=center, href="https://www.codecogs.com/eqnedit.php?latex=cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?cos(\theta&space;)&space;=&space;\frac{A\cdot&space;B}{\left&space;\|&space;A&space;\right&space;\|\left&space;\|&space;B&space;\right&space;\|}&space;=&space;\frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times&space;\sqrt{\sum_{i=1}^{n}({B}_i)^2}}" title="cos(\theta ) = \frac{A\cdot B}{\left \| A \right \|\left \| B \right \|} = \frac{\sum_{i=1}^{n}{A}_i\times{B}_i}{\sqrt{\sum_{i=1}^{n}({A}_i)^2}\times \sqrt{\sum_{i=1}^{n}({B}_i)^2}}" /></a>
 
 where A and B are feature(user) vectors of each product.
 The code of Cosine-LSH refers to https://github.com/soundcloud/cosine-lsh-join-spark, which needs to use its library to implement.
@@ -83,7 +84,7 @@ In this program, we don't take the top-k users, and just use all other users' ra
 * Pearson correlation 
 For users (u, v), Pearson correlation is
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" title="w_{u,v} = \frac{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})(r_{v,i} - \bar{r}_{v})}{\sqrt{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})^2}\sqrt{\sum_{i \in I} (r_{v,i} - \bar{r}_{v})^2}}" /></a>
+<div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?w_{u,v}&space;=&space;\frac{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})(r_{v,i}&space;-&space;\bar{r}_{v})}{\sqrt{\sum_{i&space;\in&space;I}&space;(r_{u,i}&space;-&space;\bar{r}_{u})^2}\sqrt{\sum_{i&space;\in&space;I}&space;(r_{v,i}&space;-&space;\bar{r}_{v})^2}}" title="w_{u,v} = \frac{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})(r_{v,i} - \bar{r}_{v})}{\sqrt{\sum_{i \in I} (r_{u,i} - \bar{r}_{u})^2}\sqrt{\sum_{i \in I} (r_{v,i} - \bar{r}_{v})^2}}" /></a>
 
 where I summations are over the items that both user u and v have rated, and <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> is the average rating of the co-rated items of the uth user.
 
@@ -94,7 +95,7 @@ Weighted average of their ratings is used to generate predictions.
 
 To make a prediction for an active user a on an item i:
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" title="P_{a,i} = \bar{r}_a + \frac{\sum_{u \in U}(r_{u,i} - \bar{r}_u)\cdot w_{a,u}}{\sum_{u \in U}\left | w_{a,u} \right |}" /></a>
+<div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" title="P_{a,i} = \bar{r}_a + \frac{\sum_{u \in U}(r_{u,i} - \bar{r}_u)\cdot w_{a,u}}{\sum_{u \in U}\left | w_{a,u} \right |}" /></a>
 
 where <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{a}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{a}" title="\bar{r}_{a}" /></a> and  <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> are the average ratings of user a and u on all other rated items, and is the weight between the user a and user u. The summations are over all the users who have rated the item i.
 
@@ -115,7 +116,7 @@ After achieving the prediction for ratings, we compare the result to the corresp
 
 Additionally, RMSE (Root Mean Squared Error) is computed to evaluate the model.
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" title="RMSE = \sqrt{\frac{1}{n}\sum_{i}({Prediction}_i - {Rate}_i)^2}" /></a>
+<div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" title="RMSE = \sqrt{\frac{1}{n}\sum_{i}({Prediction}_i - {Rate}_i)^2}" /></a>
   
 ## 4. Usage Example
 Open your terminal, using following command line in the top-level Spark directory to launch the applications. 
