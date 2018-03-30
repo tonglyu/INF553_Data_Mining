@@ -100,9 +100,9 @@ In this program, we don't take the top-k users, and just use all other users' ra
 
 <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P_{a,i}&space;=&space;\bar{r}_a&space;&plus;&space;\frac{\sum_{u&space;\in&space;U}(r_{u,i}&space;-&space;\bar{r}_u)\cdot&space;w_{a,u}}{\sum_{u&space;\in&space;U}\left&space;|&space;w_{a,u}&space;\right&space;|}" title="P_{a,i} = \bar{r}_a + \frac{\sum_{u \in U}(r_{u,i} - \bar{r}_u)\cdot w_{a,u}}{\sum_{u \in U}\left | w_{a,u} \right |}" /></a></div>
 
-  where <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{a}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{a}" title="\bar{r}_{a}" /></a> and  <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> are the average ratings of user a and u on all other rated items, and is the weight between the user a and user u. The summations are over all the users who have rated the item i.
+   where <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{a}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{a}" title="\bar{r}_{a}" /></a> and  <a href="https://www.codecogs.com/eqnedit.php?latex=\bar{r}_{u}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bar{r}_{u}" title="\bar{r}_{u}" /></a> are the average ratings of user a and u on all other rated items, and is the weight between the user a and user u. The summations are over all the users who have rated the item i.
 
-  Note: When making predictions, calculate average of all rated items except item i for users a and u. 
+   Note: When making predictions, calculate average of all rated items except item i for users a and u. 
 
 #### 3) Evaluation 
 After achieving the prediction for ratings, we compare the result to the correspond ground truth and compute the absolute differences. The absolute differences are divided into 5 levels, and the numbers of the prediction for each level are counted as following:
@@ -121,7 +121,9 @@ Additionally, RMSE (Root Mean Squared Error) is computed to evaluate the model.
 
 <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?RMSE&space;=&space;\sqrt{\frac{1}{n}\sum_{i}({Prediction}_i&space;-&space;{Rate}_i)^2}" title="RMSE = \sqrt{\frac{1}{n}\sum_{i}({Prediction}_i - {Rate}_i)^2}" /></a></div>
   
+
 ## 4. Usage Example
+
 Open your terminal, using following command line in the top-level Spark directory to launch the applications. 
 `$SPARK_HOME/bin/spark-submit --class <main-class> <application-jar> args(0) [args(1)] args(2)`
 
