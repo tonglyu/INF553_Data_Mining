@@ -73,8 +73,13 @@ object UserBasedCF {
     val min = predictions.values.min()
     val range = predictions.values.max() - min
     val predictions_normal = predictions.map { case ((user, product), rate) =>
-      val nor_rate = 5 * (rate - min) / range
-      ((user, product), rate)
+      if (rate > 5) {
+        ((user, product), 5.0)
+      } else if (rate < 0){
+        ((user, product), 0.0)
+      }else{
+        ((user, product),rate)
+      }
     }
 
     val ratesAndPreds = testing.join(predictions_normal)
@@ -105,7 +110,6 @@ object UserBasedCF {
     })
 
     val out = new PrintWriter(System.getProperty("user.dir") + args(2))
-    out.write("userId,productId,predict_rating" + "\n")
     val result = predictions_normal.sortByKey().collect().toList
     for (pred <- result) {
       val line = pred._1._1 + "," + pred._1._2 + "," + pred._2 + "\n"
@@ -122,6 +126,5 @@ object UserBasedCF {
     val end_time = System.nanoTime()
     val time = (end_time - start_time) / 1000000000
     println("Time: " + time + " sec")
-
   }
 }
