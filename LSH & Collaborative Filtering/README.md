@@ -16,7 +16,7 @@ The second one is Collaborative Filtering with model-based and user-based algori
   /video_small_ground_truth_jaccard.csv
   
 ## 3. Implementation of algorithm
-### Locality-Sensitive Hashing (LSH)
+### 3.1 Locality-Sensitive Hashing (LSH)
 #### 1) Minhash signatures
 The aim of minhashing is to reduce the large sets of features (e.g. user sets of each products) into small signatures.
 The original characteristic matrix (S) of sets is as follows:
@@ -60,11 +60,11 @@ Confusion Matrix
 |Postive(actual)|True positive (TP)|False Negative(FN)
 |Negative(actual)|False positive (FP)|True Negative(TN)
 
-Precison = TP / (TP + FP)
+* Precison = TP / (TP + FP)
 
-Recall = TP / (TP + FN)
+* Recall = TP / (TP + FN)
 
-### Collaborative Filtering
+### 3.2 Collaborative Filtering
 The /video_small_testing_num.csv datasets are a subset of the video_small_num.csv, each having the same columns as its parent. The programs predict the ratings of every <userId> and <productId> combination in the test files. 
 
 #### 1) Model-based CF
