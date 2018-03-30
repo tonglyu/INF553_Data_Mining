@@ -14,6 +14,7 @@ The second one is Collaborative Filtering with model-based and user-based algori
   /video_small_ground_truth_cosine.csv
   
   /video_small_ground_truth_jaccard.csv
+  
 ## 3. Implementation of algorithm
 ### Locality-Sensitive Hashing (LSH)
 #### 1) Minhash signatures
@@ -148,15 +149,15 @@ Tips:
 4)  The code of Jaccard LSH reads ground-truth data automatically from the current folder, please make sure the file /video_small_ground_truth_jaccard.csv exists.
 
 ## 5. Execution result
-### 1. Jaccard LSH
+### 1) Jaccard LSH
 * Precision: 0.9999782920158035
 * Recall: 0.90129133242027
 * Time: 45s
-### 2. Cosine LSH
+### 2) Cosine LSH
 * Precision: 0.9407345864921938
 * Recall: 0.7131235730968064
 * Time: 572s
-### 3. Model-based CF
+### 3) Model-based CF
 
 |Range of errors|Count
 | :------: | :------: |
@@ -169,7 +170,7 @@ Tips:
 |Time|72s
 
   
-### 4. User-based CF
+### 4) User-based CF
 
 |Range of errors|Count
 | :------: | :------: |
