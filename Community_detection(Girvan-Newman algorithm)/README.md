@@ -11,6 +11,7 @@ Open your terminal, using following command line in the top-level Spark director
 `$SPARK_HOME/bin/spark-submit --class <main-class> <application-jar> <input_file> <output_file>`  in the top-level Spark directory to launch the applications. 
 
 For example,
+
 `.bin/ spark-submit --class Betweenness Tong_Lyu_hw4.jar /video_small_num.csv /Tong_Lyu_Betweenness.txt `
 
 `.bin/ spark-submit --class Community Tong_Lyu_hw4.jar /video_small_num.csv /Tong_Lyu_Community.txt `
